@@ -1,22 +1,13 @@
 class Solution {
     fun solution(quiz: Array<String>): Array<String?> {
-        val res = arrayOfNulls<String>(quiz.size)
-        for (i in quiz.indices) {
-            val arr = quiz[i].split(" ").toTypedArray()
-            if (arr[1] == "+") {
-                if (arr[0].toInt() + arr[2].toInt() == arr[4].toInt()) {
-                    res[i] = "O"
-                } else {
-                    res[i] = "X"
-                }
-            } else if (arr[1] == "-") {
-                if (arr[0].toInt() - arr[2].toInt() == arr[4].toInt()) {
-                    res[i] = "O"
-                } else {
-                    res[i] = "X"
-                }
+        return quiz.map { Item ->
+            val (x, oper, y, _, z) = Item.split(" ")
+            val correct = when (oper) {
+                "+" -> x.toInt() + y.toInt() == z.toInt()
+                "-" -> x.toInt() - y.toInt() == z.toInt()
+                else -> false
             }
-        }
-        return res
+            if (correct) "O" else "X"
+        }.toTypedArray()
     }
 }
